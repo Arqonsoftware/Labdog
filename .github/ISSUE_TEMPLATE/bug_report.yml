@@ -5,9 +5,9 @@ body:
   - type: input
     id: tool
     attributes:
-      label: Tool and version
-      description: Output of `<tool> -version`
-      placeholder: pi-watchdog v0.1.0
+      label: Version
+      description: Output of `labdog version`
+      placeholder: v0.1.0
     validations:
       required: true
   - type: input
