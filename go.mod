@@ -1,3 +1,3 @@
-module github.com/Arqonsoftware/com.arqonsoftware.tools
+module github.com/Arqonsoftware/labdog
 
 go 1.24

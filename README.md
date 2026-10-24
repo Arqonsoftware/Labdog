@@ -1,4 +1,4 @@
-# com.arqonsoftware.tools
+# labdog 🐕
 
 Small Go binaries for Arqonsoftware's servers and Raspberry Pis. Each tool lives in `cmd/<name>` and is released as a static binary for linux amd64, arm64 and armv7.
 
@@ -20,4 +20,4 @@ Push a tag; the Release workflow builds every tool with GoReleaser and attaches 
 
 ## Install
 
-    gh release download --repo Arqonsoftware/com.arqonsoftware.tools --pattern '*linux_amd64.tar.gz'
+    gh release download --repo Arqonsoftware/labdog --pattern '*linux_amd64.tar.gz'
