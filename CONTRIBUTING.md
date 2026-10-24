@@ -40,3 +40,5 @@ Maintainers release by pushing a semver tag (`v1.2.3`). The Release workflow bui
 ## Conduct and security
 
 Participation is covered by the [Code of Conduct](CODE_OF_CONDUCT.md). Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md), not in public issues.
+
+labdog is maintained by [Arqonsoftware](https://arqonsoftware.com).
