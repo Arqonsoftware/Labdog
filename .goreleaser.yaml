@@ -1,4 +1,5 @@
 version: 2
+project_name: labdog
 builds:
   - id: pi-watchdog
     main: ./cmd/pi-watchdog
@@ -10,7 +11,7 @@ builds:
     ldflags: ["-s -w -X main.version={{.Version}}"]
 archives:
   - formats: [tar.gz]
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    name_template: "labdog_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
 checksum:
   name_template: checksums.txt
 changelog:

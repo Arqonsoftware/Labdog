@@ -1,23 +1,75 @@
-# labdog 🐕
+<p align="center">
+  <img src="assets/logo.svg" alt="labdog" width="480">
+</p>
 
-Small Go binaries for Arqonsoftware's servers and Raspberry Pis. Each tool lives in `cmd/<name>` and is released as a static binary for linux amd64, arm64 and armv7.
+<p align="center">
+  <a href="https://github.com/Arqonsoftware/labdog/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Arqonsoftware/labdog/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/Arqonsoftware/labdog/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/Arqonsoftware/labdog?sort=semver"></a>
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+</p>
+
+**labdog** is a collection of small, single-purpose Go binaries that keep home-lab servers and Raspberry Pis well behaved. Each tool is a static binary with no runtime dependencies, released for Linux on amd64, arm64 and armv7.
 
 ## Tools
 
-| Tool | Purpose |
+| Tool | What it does |
 |---|---|
-| `pi-watchdog` | Gracefully shuts the host down when a peer sharing its power (e.g. a Pi with no UPS) stops answering pings. |
+| [`pi-watchdog`](cmd/pi-watchdog) | Shuts the host down gracefully when a peer that shares its power (for example a Pi with no UPS) stops answering pings. |
 
-## Build
+### pi-watchdog
 
-    go build ./cmd/<name>
+A Pi on the same power circuit as your server vanishes the moment mains power drops. `pi-watchdog` treats that as an outage signal and shuts the server down cleanly. It only arms itself after it has seen the peer up, so a peer that is down at boot can't cause a shutdown loop.
 
-## Release
+    pi-watchdog -peer 192.168.0.2 -fail-after 60s
 
-Push a tag; the Release workflow builds every tool with GoReleaser and attaches the archives and `checksums.txt` to a GitHub release.
+| Flag | Default | Description |
+|---|---|---|
+| `-peer` | required | Address of the power-loss sensor |
+| `-fail-after` | `60s` | How long the peer must be unreachable before shutting down |
+| `-interval` | `10s` | Ping interval |
+| `-dry-run` | `false` | Log instead of shutting down |
+| `-version` | | Print version and exit |
 
-    git tag v0.1.0 && git push origin v0.1.0
+It needs root (or permission to run `shutdown`) and a `ping` binary. To bring the server back after power returns, have the peer send a Wake-on-LAN packet at boot and enable "restore on AC power loss" in the server's BIOS.
+
+Example systemd unit:
+
+    [Unit]
+    Description=pi-watchdog
+    After=network-online.target
+
+    [Service]
+    ExecStart=/usr/local/bin/pi-watchdog -peer 192.168.0.2
+    Restart=always
+
+    [Install]
+    WantedBy=multi-user.target
 
 ## Install
 
-    gh release download --repo Arqonsoftware/labdog --pattern '*linux_amd64.tar.gz'
+Download a release archive for your architecture (`amd64`, `arm64` or `armv7`) and verify it against `checksums.txt`:
+
+    gh release download --repo Arqonsoftware/labdog --pattern 'labdog_*_linux_amd64.tar.gz'
+    tar xzf labdog_*_linux_amd64.tar.gz
+    sudo install pi-watchdog /usr/local/bin/
+
+Or build from source with Go 1.24+:
+
+    go install github.com/Arqonsoftware/labdog/cmd/pi-watchdog@latest
+
+## Development
+
+    go vet ./...
+    go build ./cmd/<tool>
+
+New tools go in `cmd/<name>` and are picked up by the release workflow once added to `.goreleaser.yaml`.
+
+## Releasing
+
+Push a tag and the Release workflow builds every tool with GoReleaser and publishes a GitHub release with archives and checksums:
+
+    git tag v0.1.0 && git push origin v0.1.0
+
+## License
+
+[MIT](LICENSE) © Arqonsoftware

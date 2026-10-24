@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" role="img" aria-label="labdog">
+  <title>labdog</title>
+  <rect width="640" height="200" rx="24" fill="#0f172a"/>
+  <g transform="translate(40 36)" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 40 L10 8 L48 28"/>
+    <path d="M108 40 L118 8 L80 28"/>
+    <path d="M20 40 Q14 96 64 112 Q114 96 108 40 Q64 18 20 40 Z"/>
+    <circle cx="46" cy="64" r="4" fill="#38bdf8"/>
+    <circle cx="82" cy="64" r="4" fill="#38bdf8"/>
+    <path d="M54 84 Q64 94 74 84"/>
+  </g>
+  <text x="200" y="104" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="64" font-weight="700" fill="#f8fafc">lab<tspan fill="#38bdf8">dog</tspan></text>
+  <text x="202" y="144" font-family="system-ui,sans-serif" font-size="22" fill="#94a3b8">small watchdogs for your lab</text>
+</svg>
