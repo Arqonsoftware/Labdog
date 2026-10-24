@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="labdog" width="480">
+  <img src="assets/logo.svg" alt="labdog" width="560">
 </p>
 
 <p align="center">
@@ -69,6 +69,10 @@ New tools go in `cmd/<name>` and are picked up by the release workflow once adde
 Push a tag and the Release workflow builds every tool with GoReleaser and publishes a GitHub release with archives and checksums:
 
     git tag v0.1.0 && git push origin v0.1.0
+
+## Contributing
+
+Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first, and report vulnerabilities as described in [SECURITY.md](SECURITY.md).
 
 ## License
 

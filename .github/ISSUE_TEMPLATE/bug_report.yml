@@ -1,0 +1,31 @@
+name: Bug report
+description: Something isn't working as expected
+labels: [bug]
+body:
+  - type: input
+    id: tool
+    attributes:
+      label: Tool and version
+      description: Output of `<tool> -version`
+      placeholder: pi-watchdog v0.1.0
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: OS and architecture
+      placeholder: Alpine 3.22 armv7
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Include the command line and any logs.
+      render: shell
