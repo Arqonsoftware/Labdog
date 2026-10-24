@@ -1,5 +1,3 @@
-// pi-watchdog shuts the host down gracefully when a peer that shares its
-// power supply (e.g. a Raspberry Pi with no UPS) stops answering pings.
 package main
 
 import (
@@ -9,26 +7,23 @@ import (
 	"time"
 )
 
-var version = "dev"
-
 func reachable(addr string) bool {
 	return exec.Command("ping", "-c1", "-W2", addr).Run() == nil
 }
 
-func main() {
-	peer := flag.String("peer", "", "address of the power-loss sensor (required)")
-	failAfter := flag.Duration("fail-after", 60*time.Second, "how long the peer must be unreachable before shutting down")
-	interval := flag.Duration("interval", 10*time.Second, "ping interval")
-	dryRun := flag.Bool("dry-run", false, "log instead of shutting down")
-	showVersion := flag.Bool("version", false, "print version and exit")
-	flag.Parse()
+// runWatchdog shuts the host down when a peer that shares its power supply
+// (e.g. a Raspberry Pi with no UPS) stops answering pings.
+func runWatchdog(args []string) int {
+	fs := flag.NewFlagSet("watchdog", flag.ExitOnError)
+	peer := fs.String("peer", "", "address of the power-loss sensor (required)")
+	failAfter := fs.Duration("fail-after", 60*time.Second, "how long the peer must be unreachable before shutting down")
+	interval := fs.Duration("interval", 10*time.Second, "ping interval")
+	dryRun := fs.Bool("dry-run", false, "log instead of shutting down")
+	fs.Parse(args)
 
-	if *showVersion {
-		log.Println(version)
-		return
-	}
 	if *peer == "" {
-		log.Fatal("-peer is required")
+		log.Print("watchdog: -peer is required")
+		return 2
 	}
 
 	// Armed only after the peer has been seen up, so a peer that is down
@@ -50,12 +45,13 @@ func main() {
 			if time.Since(downSince) >= *failAfter {
 				log.Printf("peer down for %s: assuming power outage, shutting down", *failAfter)
 				if *dryRun {
-					return
+					return 0
 				}
 				if err := exec.Command("shutdown", "-h", "now", "peer unreachable: power outage").Run(); err != nil {
-					log.Fatalf("shutdown failed: %v", err)
+					log.Printf("shutdown failed: %v", err)
+					return 1
 				}
-				return
+				return 0
 			}
 		}
 		time.Sleep(*interval)

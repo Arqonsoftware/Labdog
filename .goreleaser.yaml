@@ -1,9 +1,9 @@
 version: 2
 project_name: labdog
 builds:
-  - id: pi-watchdog
-    main: ./cmd/pi-watchdog
-    binary: pi-watchdog
+  - id: labdog
+    main: ./cmd/labdog
+    binary: labdog
     env: [CGO_ENABLED=0]
     goos: [linux]
     goarch: [amd64, arm64, arm]
