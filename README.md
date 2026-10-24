@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+  <a href="https://arqonsoftware.com">arqonsoftware.com</a>
+</p>
+
+<p align="center">
   <a href="https://github.com/Arqonsoftware/labdog/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Arqonsoftware/labdog/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://github.com/Arqonsoftware/labdog/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/Arqonsoftware/labdog?sort=semver"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
@@ -76,4 +80,6 @@ Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) fi
 
 ## License
 
-[MIT](LICENSE) © Arqonsoftware
+[MIT](LICENSE) © [Arqonsoftware](https://arqonsoftware.com)
+
+labdog is built and maintained by [Arqonsoftware](https://arqonsoftware.com).
